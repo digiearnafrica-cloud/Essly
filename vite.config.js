@@ -6,5 +6,18 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    chunkSizeWarningLimit: 700,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Firebase split into its own chunk — loads in parallel with app
+          'firebase-app': ['firebase/app'],
+          'firebase-auth': ['firebase/auth'],
+          'firebase-firestore': ['firebase/firestore'],
+          // React core
+          'react-vendor': ['react', 'react-dom'],
+        },
+      },
+    },
   },
 });
